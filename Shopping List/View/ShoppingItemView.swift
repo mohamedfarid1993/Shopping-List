@@ -24,7 +24,9 @@ struct ShoppingItemView: View {
             }
             Spacer()
             Button(action: {
-                item.isBought.toggle()
+                withAnimation {
+                    item.isBought.toggle()
+                }
             }) {
                 Image(systemName: item.isBought ? "checkmark.square.fill" : "square")
                     .resizable()

@@ -10,7 +10,7 @@ import SwiftData
 
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query(filter: #Predicate<Item> { !$0.isBought }) private var items: [Item]
     @State private var isPresentingAddItemView = false
     
     var body: some View {
@@ -54,8 +54,10 @@ struct ShoppingListView: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
-        for index in offsets {
-            modelContext.delete(items[index])
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(items[index])
+            }
         }
     }
 }
