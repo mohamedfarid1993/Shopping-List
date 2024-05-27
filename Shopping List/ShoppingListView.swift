@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ShoppingListView.swift
 //  Shopping List
 //
 //  Created by Mohamed Farid on 27/05/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
@@ -56,6 +56,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ShoppingListView()
         .modelContainer(for: Item.self, inMemory: true)
 }
