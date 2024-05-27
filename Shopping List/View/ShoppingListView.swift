@@ -23,6 +23,7 @@ struct ShoppingListView: View {
         NavigationView {
             VStack {
                 Toggle("Show Bought Items Only", isOn: $showOnlyBoughtItems)
+                    .font(.callout)
                     .padding([.horizontal, .top])
                 List {
                     if (showOnlyBoughtItems ? boughtItems : items).isEmpty {
