@@ -24,11 +24,14 @@ struct EditItemView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Item Details")) {
+            Section(header: Text("Item Details").font(.subheadline)) {
                 TextField("Name", text: $name)
+                    .frame(height: 40)
                 TextField("Description", text: $itemDescription)
+                    .frame(height: 40)
                 Stepper(value: $quantity, in: 0...100) {
                     Text("Quantity: \(quantity)")
+                        .frame(height: 40)
                 }
             }
         }
