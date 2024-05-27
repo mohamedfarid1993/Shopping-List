@@ -14,11 +14,13 @@ final class Item {
     var name: String
     var itemDescription: String
     var quantity: Int
+    var isBought: Bool
     
-    init(name: String, itemDescription: String, quantity: Int) {
+    init(name: String, itemDescription: String, quantity: Int, isBought: Bool = false) {
         self.id = UUID()
         self.name = name
         self.itemDescription = itemDescription
         self.quantity = quantity
+        self.isBought = isBought
     }
 }

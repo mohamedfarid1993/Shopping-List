@@ -28,7 +28,7 @@ struct ShoppingListView: View {
                             EditItemView(item: item)
                                 .navigationBarTitle("Edit Item", displayMode: .automatic)
                         } label: {
-                            Text(item.name)
+                            ShoppingItemView(item: item)
                         }
                     }
                     .onDelete(perform: deleteItems)
@@ -62,5 +62,4 @@ struct ShoppingListView: View {
 
 #Preview {
     ShoppingListView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

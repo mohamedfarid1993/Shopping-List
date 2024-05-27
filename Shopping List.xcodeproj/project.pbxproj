@@ -17,6 +17,7 @@
 		72EBCF492C050B03009D21E7 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */; };
 		72EBCF4C2C050E32009D21E7 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF4B2C050E32009D21E7 /* AddItemView.swift */; };
 		72EBCF4E2C05129C009D21E7 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF4D2C05129C009D21E7 /* EditItemView.swift */; };
+		72EBCF502C0525A3009D21E7 /* ShoppingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF4F2C0525A3009D21E7 /* ShoppingItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		72EBCF392C050571009D21E7 /* Shopping_ListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping_ListUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		72EBCF4B2C050E32009D21E7 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		72EBCF4D2C05129C009D21E7 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
+		72EBCF4F2C0525A3009D21E7 /* ShoppingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				72EBCF1A2C05056F009D21E7 /* Shopping_ListApp.swift */,
-				72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */,
 				72EBCF4A2C050E1A009D21E7 /* View */,
 				72EBCF472C0509C9009D21E7 /* Model */,
 				72EBCF202C050571009D21E7 /* Assets.xcassets */,
@@ -146,8 +147,10 @@
 		72EBCF4A2C050E1A009D21E7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */,
 				72EBCF4B2C050E32009D21E7 /* AddItemView.swift */,
 				72EBCF4D2C05129C009D21E7 /* EditItemView.swift */,
+				72EBCF4F2C0525A3009D21E7 /* ShoppingItemView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				72EBCF492C050B03009D21E7 /* ShoppingListView.swift in Sources */,
 				72EBCF1F2C05056F009D21E7 /* Item.swift in Sources */,
 				72EBCF4E2C05129C009D21E7 /* EditItemView.swift in Sources */,
+				72EBCF502C0525A3009D21E7 /* ShoppingItemView.swift in Sources */,
 				72EBCF1B2C05056F009D21E7 /* Shopping_ListApp.swift in Sources */,
 				72EBCF4C2C050E32009D21E7 /* AddItemView.swift in Sources */,
 			);
