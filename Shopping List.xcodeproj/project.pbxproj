@@ -97,8 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				72EBCF1A2C05056F009D21E7 /* Shopping_ListApp.swift */,
-				72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */,
-				72EBCF1E2C05056F009D21E7 /* Item.swift */,
+				72EBCF462C0509BC009D21E7 /* Views */,
+				72EBCF472C0509C9009D21E7 /* Models */,
 				72EBCF202C050571009D21E7 /* Assets.xcassets */,
 				72EBCF222C050571009D21E7 /* Preview Content */,
 			);
@@ -128,6 +128,22 @@
 				72EBCF392C050571009D21E7 /* Shopping_ListUITestsLaunchTests.swift */,
 			);
 			path = "Shopping ListUITests";
+			sourceTree = "<group>";
+		};
+		72EBCF462C0509BC009D21E7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		72EBCF472C0509C9009D21E7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				72EBCF1E2C05056F009D21E7 /* Item.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
