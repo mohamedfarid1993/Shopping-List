@@ -16,19 +16,29 @@ struct ShoppingListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        EditItemView(item: item)
-                            .navigationBarTitle("Edit Item", displayMode: .automatic)
-                    } label: {
-                        Text(item.name)
+                if items.isEmpty {
+                    Text("Your shopping list is empty. Start adding items by tapping the '+' button.")
+                        .foregroundColor(.secondary)
+                        .padding()
+                        .multilineTextAlignment(.center)
+                        .frame(alignment: .center)
+                } else {
+                    ForEach(items) { item in
+                        NavigationLink {
+                            EditItemView(item: item)
+                                .navigationBarTitle("Edit Item", displayMode: .automatic)
+                        } label: {
+                            Text(item.name)
+                        }
                     }
+                    .onDelete(perform: deleteItems)
                 }
-                .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                    if !items.isEmpty {
+                        EditButton()
+                    }
                 }
                 ToolbarItem {
                     Button(action: { isPresentingAddItemView.toggle() }) {
@@ -44,10 +54,8 @@ struct ShoppingListView: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+        for index in offsets {
+            modelContext.delete(items[index])
         }
     }
 }
