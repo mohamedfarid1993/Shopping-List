@@ -11,15 +11,17 @@ import SwiftData
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-
+    @State private var isPresentingAddItemView = false
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationView {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        EditItemView(item: item)
+                            .navigationBarTitle("Edit Item", displayMode: .automatic)
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text(item.name)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -29,23 +31,18 @@ struct ShoppingListView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: { isPresentingAddItemView.toggle() }) {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
+        }
+        .sheet(isPresented: $isPresentingAddItemView) {
+            AddItemView(isPresented: $isPresentingAddItemView)
+                .environment(\.modelContext, modelContext)
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
