@@ -10,42 +10,53 @@ import SwiftData
 
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
+    @State private var showOnlyBoughtItems = false
     @Query(filter: #Predicate<Item> { !$0.isBought }) private var items: [Item]
+    @Query(filter: #Predicate<Item> { $0.isBought }) private var boughtItems: [Item]
     @State private var isPresentingAddItemView = false
+    
+    var filteredItems: [Item] {
+        showOnlyBoughtItems ? boughtItems : items
+    }
     
     var body: some View {
         NavigationView {
-            List {
-                if items.isEmpty {
-                    Text("Your shopping list is empty. Start adding items by tapping the '+' button.")
-                        .foregroundColor(.secondary)
-                        .padding()
-                        .multilineTextAlignment(.center)
-                        .frame(alignment: .center)
-                } else {
-                    ForEach(items) { item in
-                        NavigationLink {
-                            EditItemView(item: item)
-                                .navigationBarTitle("Edit Item", displayMode: .automatic)
-                        } label: {
-                            ShoppingItemView(item: item)
+            VStack {
+                Toggle("Show Bought Items Only", isOn: $showOnlyBoughtItems)
+                    .padding([.horizontal, .top])
+                List {
+                    if (showOnlyBoughtItems ? boughtItems : items).isEmpty {
+                        Text("Your shopping list is empty. Start adding items by tapping the '+' button.")
+                            .foregroundColor(.secondary)
+                            .padding()
+                            .multilineTextAlignment(.center)
+                            .frame(alignment: .center)
+                    } else {
+                        ForEach(filteredItems) { item in
+                            NavigationLink {
+                                EditItemView(item: item)
+                                    .navigationBarTitle("Edit Item", displayMode: .automatic)
+                            } label: {
+                                ShoppingItemView(item: item)
+                            }
+                        }
+                        .onDelete(perform: deleteItems)
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if !filteredItems.isEmpty {
+                            EditButton()
                         }
                     }
-                    .onDelete(perform: deleteItems)
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    if !items.isEmpty {
-                        EditButton()
-                    }
-                }
-                ToolbarItem {
-                    Button(action: { isPresentingAddItemView.toggle() }) {
-                        Label("Add Item", systemImage: "plus")
+                    ToolbarItem {
+                        Button(action: { isPresentingAddItemView.toggle() }) {
+                            Label("Add Item", systemImage: "plus")
+                        }
                     }
                 }
             }
+            .navigationBarTitle("Shopping List", displayMode: .inline)
         }
         .sheet(isPresented: $isPresentingAddItemView) {
             AddItemView(isPresented: $isPresentingAddItemView)
@@ -56,7 +67,7 @@ struct ShoppingListView: View {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(items[index])
+                modelContext.delete(filteredItems[index])
             }
         }
     }
