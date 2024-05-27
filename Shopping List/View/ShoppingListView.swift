@@ -11,12 +11,15 @@ import SwiftData
 struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var showOnlyBoughtItems = false
-    @Query(filter: #Predicate<Item> { !$0.isBought }) private var items: [Item]
-    @Query(filter: #Predicate<Item> { $0.isBought }) private var boughtItems: [Item]
+    @Query private var items: [Item]
     @State private var isPresentingAddItemView = false
     
     var filteredItems: [Item] {
-        showOnlyBoughtItems ? boughtItems : items
+        if showOnlyBoughtItems {
+            (try? items.filter(#Predicate<Item> { $0.isBought })) ?? []
+        } else {
+            (try? items.filter(#Predicate<Item> { !$0.isBought })) ?? []
+        }
     }
     
     var body: some View {
@@ -26,7 +29,7 @@ struct ShoppingListView: View {
                     .font(.callout)
                     .padding([.horizontal, .top])
                 List {
-                    if (showOnlyBoughtItems ? boughtItems : items).isEmpty {
+                    if filteredItems.isEmpty {
                         Text("Your shopping list is empty. Start adding items by tapping the '+' button.")
                             .foregroundColor(.secondary)
                             .padding()
