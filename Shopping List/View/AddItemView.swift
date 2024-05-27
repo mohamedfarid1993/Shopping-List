@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct AddItemView: View {
+    
+    // MARK: Properties
+    
     @Environment(\.modelContext) private var modelContext
     @Binding var isPresented: Bool
     @State private var name: String = ""
@@ -15,6 +18,8 @@ struct AddItemView: View {
     @State private var quantity: Int = 0
     @State private var showAlert = false
     @State private var alertMessage = ""
+    
+    // MARK: Body
     
     var body: some View {
         NavigationView {
@@ -41,6 +46,13 @@ struct AddItemView: View {
             }
         }
     }
+}
+
+// MARK: - Methods
+
+extension AddItemView {
+    
+    // MARK: Validate Item
     
     private func validateAndSaveItem() {
         guard !name.isEmpty else {
@@ -65,11 +77,15 @@ struct AddItemView: View {
         isPresented = false
     }
     
+    // MARK: Add Item
+    
     private func addItem() {
         let newItem = Item(name: name, itemDescription: itemDescription, quantity: quantity)
         modelContext.insert(newItem)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     AddItemView(isPresented: Binding.constant(true))

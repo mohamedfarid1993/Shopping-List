@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct ShoppingItemView: View {
+    
+    // MARK: Properties
+    
     @Bindable var item: Item
+    
+    // MARK: Body
 
     var body: some View {
         HStack {
@@ -23,22 +28,35 @@ struct ShoppingItemView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Button(action: {
-                withAnimation {
-                    item.isBought.toggle()
-                }
-            }) {
-                Image(systemName: item.isBought ? "checkmark.square.fill" : "square")
-                    .resizable()
-                    .foregroundColor(item.isBought ? .blue : .gray)
-                    .frame(width: 20, height: 20)
-            }
-            .padding(.trailing, 8)
-            .buttonStyle(BorderlessButtonStyle())
+            IsBoughtCheckBox
         }
         .padding(.vertical, 8)
     }
 }
+
+// MARK: - Subview
+
+extension ShoppingItemView {
+    
+    // MARK: - Is Bought Check Box
+    
+    private var IsBoughtCheckBox: some View {
+        Button(action: {
+            withAnimation {
+                item.isBought.toggle()
+            }
+        }) {
+            Image(systemName: item.isBought ? "checkmark.square.fill" : "square")
+                .resizable()
+                .foregroundColor(item.isBought ? .blue : .gray)
+                .frame(width: 20, height: 20)
+        }
+        .padding(.trailing, 8)
+        .buttonStyle(BorderlessButtonStyle())
+    }
+}
+
+// MARK: - Preview
 
 #Preview {
     ShoppingItemView(item: Item(name: "", itemDescription: "", quantity: 0))

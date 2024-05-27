@@ -10,11 +10,16 @@ import SwiftData
 
 @Model
 final class Item {
+    
+    // MARK: Properties
+    
     @Attribute(.unique) var id: UUID
     var name: String
     var itemDescription: String
     var quantity: Int
     var isBought: Bool
+    
+    // MARK: Initializers
     
     init(name: String, itemDescription: String, quantity: Int, isBought: Bool = false) {
         self.id = UUID()

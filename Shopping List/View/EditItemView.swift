@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EditItemView: View {
+    
+    // MARK: Properties
+    
     @Environment(\.presentationMode) private var presentationMode
     @State private var name: String
     @State private var itemDescription: String
@@ -15,12 +18,16 @@ struct EditItemView: View {
     
     @Bindable var item: Item
     
+    // MARK: Initializers
+    
     init(item: Item) {
         self.item = item
         _name = State(initialValue: item.name)
         _itemDescription = State(initialValue: item.itemDescription)
         _quantity = State(initialValue: item.quantity)
     }
+    
+    // MARK: Body
     
     var body: some View {
         Form {
@@ -39,6 +46,13 @@ struct EditItemView: View {
             updateItem()
         })
     }
+}
+
+// MARK: - Methods
+
+extension EditItemView {
+    
+    // MARK: Update Item
     
     private func updateItem() {
         item.name = name
@@ -47,6 +61,8 @@ struct EditItemView: View {
         presentationMode.wrappedValue.dismiss()
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     EditItemView(item: Item(name: "", itemDescription: "", quantity: 0))
