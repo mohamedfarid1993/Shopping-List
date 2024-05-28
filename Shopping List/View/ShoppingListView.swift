@@ -28,6 +28,10 @@ struct ShoppingListView: View {
         }
     }
     
+    var emptyStateMessage: String {
+        showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😉" : "Your shopping list is empty. Start adding items by tapping the '+' button."
+    }
+    
     enum SortOrder {
         case none, ascending, descending
     }
@@ -124,7 +128,7 @@ extension ShoppingListView {
     // MARK: Empty State View
     
     private var EmptyStateView: some View {
-        Text("Your shopping list is empty. Start adding items by tapping the '+' button.")
+        Text(emptyStateMessage)
             .foregroundColor(.secondary)
             .padding()
             .multilineTextAlignment(.center)
