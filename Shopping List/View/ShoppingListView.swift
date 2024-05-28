@@ -16,13 +16,20 @@ struct ShoppingListView: View {
     @State private var showOnlyBoughtItems = false
     @Query private var items: [Item]
     @State private var isPresentingAddItemView = false
+    @State private var sortOrder: SortOrder = .none
     
     var filteredItems: [Item] {
-        if showOnlyBoughtItems {
-            (try? items.filter(#Predicate<Item> { $0.isBought })) ?? []
+        if sortOrder == .none {
+            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought })) ?? []
+        } else if sortOrder == .ascending {
+            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought }).sorted(by: { $0.quantity < $1.quantity })) ?? []
         } else {
-            (try? items.filter(#Predicate<Item> { !$0.isBought })) ?? []
+            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought }).sorted(by: { $0.quantity > $1.quantity })) ?? []
         }
+    }
+    
+    enum SortOrder {
+        case none, ascending, descending
     }
     
     // MARK: Body
@@ -30,9 +37,12 @@ struct ShoppingListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Toggle("Show Bought Items Only", isOn: $showOnlyBoughtItems)
-                    .font(.callout)
-                    .padding([.horizontal, .top])
+                HStack {
+                    SortingMenu
+                    Spacer()
+                    ToggleView
+                }
+                .padding([.horizontal, .top])
                 ListWithToolbar
             }
             .navigationBarTitle("Shopping List", displayMode: .inline)
@@ -47,6 +57,37 @@ struct ShoppingListView: View {
 // MARK: - Subviews
 
 extension ShoppingListView {
+    
+    // MARK: Sorting Menu
+    
+    private var SortingMenu: some View {
+        Menu {
+            Button(action: {
+                sortOrder = .ascending
+            }) {
+                Label("Sort Ascending", systemImage: sortOrder == .ascending ? "checkmark" : "")
+            }
+            Button(action: {
+                sortOrder = .descending
+            }) {
+                Label("Sort Descending", systemImage: sortOrder == .descending ? "checkmark" : "")
+            }
+        } label: {
+            Label("Sort", systemImage: "arrow.up.arrow.down")
+        }
+        .padding(.trailing)
+    }
+    
+    // MARK: Toggle View
+    
+    private var ToggleView: some View {
+        HStack {
+            Toggle("", isOn: $showOnlyBoughtItems)
+            Text("Bought Items")
+                .font(.callout)
+                .lineLimit(1)
+        }
+    }
     
     // MARK: List With Toolbar
     
