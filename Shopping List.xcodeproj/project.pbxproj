@@ -150,9 +150,17 @@
 				72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */,
 				72EBCF4B2C050E32009D21E7 /* AddItemView.swift */,
 				72EBCF4D2C05129C009D21E7 /* EditItemView.swift */,
-				72EBCF4F2C0525A3009D21E7 /* ShoppingItemView.swift */,
+				72EBCF512C05FFE1009D21E7 /* Components */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		72EBCF512C05FFE1009D21E7 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				72EBCF4F2C0525A3009D21E7 /* ShoppingItemView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

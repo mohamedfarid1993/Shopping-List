@@ -13,18 +13,26 @@ struct ShoppingListView: View {
     // MARK: Properties
     
     @Environment(\.modelContext) private var modelContext
-    @State private var showOnlyBoughtItems = false
-    @Query private var items: [Item]
+    @Query(filter: #Predicate<Item> { !$0.isBought }) private var items: [Item]
+    @Query(filter: #Predicate<Item> { $0.isBought }) private var boughtItems: [Item]
     @State private var isPresentingAddItemView = false
     @State private var sortOrder: SortOrder = .none
+    @State private var searchText = ""
+    @State private var showOnlyBoughtItems = false
     
     var filteredItems: [Item] {
-        if sortOrder == .none {
-            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought })) ?? []
-        } else if sortOrder == .ascending {
-            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought }).sorted(by: { $0.quantity < $1.quantity })) ?? []
-        } else {
-            return (try? items.filter(#Predicate<Item> { showOnlyBoughtItems ? $0.isBought : !$0.isBought }).sorted(by: { $0.quantity > $1.quantity })) ?? []
+        let itemsToSort = showOnlyBoughtItems ? boughtItems : items
+        let filteredItems = itemsToSort.filter { item in
+            searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText) || item.itemDescription.localizedCaseInsensitiveContains(searchText)
+        }
+        
+        switch sortOrder {
+        case .ascending:
+            return filteredItems.sorted(by: { $0.quantity < $1.quantity })
+        case .descending:
+            return filteredItems.sorted(by: { $0.quantity > $1.quantity })
+        case .none:
+            return filteredItems
         }
     }
     
@@ -111,6 +119,7 @@ extension ShoppingListView {
                 .onDelete(perform: deleteItems)
             }
         }
+        .searchable(text: $searchText)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !filteredItems.isEmpty {
