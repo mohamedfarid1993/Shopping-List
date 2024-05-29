@@ -4,7 +4,8 @@ This is a simple iOS application for managing your shopping list. Users can add,
 
 ## Important Notes
 
-For data persistence, the app uses Swift Data framework. However, to comply with the task requirements, the Swift Data implementation has been placed on a separate branch named "swift-data". Please review this branch for the Swift Data integration. The main branch contains the solution that adheres to the specified requirements.
+- For data persistence, the app uses Swift Data framework. However, to comply with the task requirements, the Swift Data implementation has been placed on a separate branch named "swift-data". Please review this branch for the Swift Data integration. The main branch contains the solution that adheres to the specified requirements.
+- I tried to simplify the solution as much as possible to be easy for review specially with SwiftData solution.
 
 ## Features
 
