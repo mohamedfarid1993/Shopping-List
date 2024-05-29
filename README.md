@@ -19,10 +19,10 @@ For data persistence, the app uses Swift Data framework. However, to comply with
 
 ## Tests
 - **UI Tests**: Adding an item and searching for it simple test is adding for both CoreData(main branch) and SwiftUI(swift-data branch) 
-- **Unit Tests**: Added tests for DataRepository & the app view models testable logic for only CoreData(mainBranch)
+- **Unit Tests**: Added tests for DataRepository & the app view models testable logic for only CoreData(main Branch)
 
 
-## Enhancements
+## Enhancements To Be Added
 
 - **User Experience**
 - **iPad & Landscape Designs**
