@@ -37,7 +37,11 @@ struct ShoppingListView: View {
     }
     
     var emptyStateMessage: String {
-        showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😉" : "Your shopping list is empty. Start adding items by tapping the '+' button."
+        if searchText.isEmpty {
+            return showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😉" : "Your shopping list is empty. Start adding items by tapping the '+' button."
+        } else {
+            return "We couldn't find any matches for your search."
+        }
     }
     
     enum SortOrder {
@@ -97,7 +101,7 @@ extension ShoppingListView {
             Toggle("", isOn: $showOnlyBoughtItems)
             Text("Bought Items")
                 .font(.callout)
-                .lineLimit(1)
+                .lineLimit(0)
         }
     }
     
@@ -141,7 +145,7 @@ extension ShoppingListView {
             .foregroundColor(.secondary)
             .padding()
             .multilineTextAlignment(.center)
-            .frame(alignment: .center)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
