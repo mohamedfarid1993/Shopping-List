@@ -31,15 +31,15 @@ For data persistence, the app uses Swift Data framework. However, to comply with
 
 ## Screenshots
 
-![IMG_8137](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/ec5cbc73-aaa9-4eb6-b085-495caba9016c)
-![IMG_8136](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/e9dadecc-2749-4cb3-b877-1b1a7129adc6)
-![IMG_8144](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/99b4e940-a739-43f8-9218-5fd06f4001b1)
-![IMG_8143](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/55b6ecc6-c092-4a14-92ff-b6a057c62533)
-![IMG_8142](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/52282f2f-263b-4469-a728-c8c3a457ac71)
-![IMG_8141](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/a816a83a-ea20-44ee-8fdb-e0a695eb694b)
-![IMG_8140](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/64c8710c-414d-4958-b3a0-7e2761db1141)
-![IMG_8139](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/9c186b1e-ced0-4cbf-b865-6b7b951a2cbb)
-![IMG_8138](https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/01bad88d-b054-43db-b1f5-e95680642870)
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/ec5cbc73-aaa9-4eb6-b085-495caba9016c" alt="Screenshot 1" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/e9dadecc-2749-4cb3-b877-1b1a7129adc6" alt="Screenshot 2" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/01bad88d-b054-43db-b1f5-e95680642870" alt="Screenshot 3" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/9c186b1e-ced0-4cbf-b865-6b7b951a2cbb" alt="Screenshot 4" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/64c8710c-414d-4958-b3a0-7e2761db1141" alt="Screenshot 5" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/99b4e940-a739-43f8-9218-5fd06f4001b1" alt="Screenshot 6" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/55b6ecc6-c092-4a14-92ff-b6a057c62533" alt="Screenshot 7" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/52282f2f-263b-4469-a728-c8c3a457ac71" alt="Screenshot 8" width="300">
+<img src="https://github.com/mohamedfarid1993/Shopping-List/assets/37486139/a816a83a-ea20-44ee-8fdb-e0a695eb694b" alt="Screenshot 9" width="300">
 
 ## Getting Started
 
