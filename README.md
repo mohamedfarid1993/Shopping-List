@@ -22,6 +22,7 @@ For data persistence, the app uses Swift Data framework. However, to comply with
 - **User Experience**
 - **iPad & Landscape Designs**
 - **Localizable Text**
+- **Error Handling**
 
 ## Technologies Used
 
