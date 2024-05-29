@@ -12,8 +12,10 @@ struct ShoppingListView: View {
     
     // MARK: Properties
     
+    private var repo: any DataRepository
+    
     @Environment(\.modelContext) private var modelContext
-    @StateObject var viewModel = ShoppingListViewModel()
+    @ObservedObject var viewModel: ShoppingListViewModel
     @State private var isPresentingAddItemView = false
     @State private var sortOrder: SortOrder = .none
     @State private var searchText = ""
@@ -48,6 +50,13 @@ struct ShoppingListView: View {
         case none, ascending, descending
     }
     
+    // MARK: Initializer
+    
+    init(repo: any DataRepository) {
+        self.repo = repo
+        self.viewModel = ShoppingListViewModel(repo: self.repo)
+    }
+    
     // MARK: Body
     
     var body: some View {
@@ -64,7 +73,7 @@ struct ShoppingListView: View {
             .navigationBarTitle("Shopping List", displayMode: .inline)
         }
         .sheet(isPresented: $isPresentingAddItemView) {
-            AddItemView(isPresented: $isPresentingAddItemView)
+            AddItemView(repo: self.repo, isPresented: $isPresentingAddItemView)
                 .accessibility(identifier: AccessibilityIdentifiers.addItemView)
         }
         .alert(isPresented: $viewModel.isShowingError) {
@@ -122,10 +131,12 @@ extension ShoppingListView {
             } else {
                 ForEach(filteredItems) { item in
                     NavigationLink {
-                        EditItemView(item: item)
+                        EditItemView(repo: self.repo, item: item)
                             .navigationBarTitle("Edit Item", displayMode: .automatic)
                     } label: {
-                        ShoppingItemView(item: item)
+                        ShoppingItemView(item: item) {
+                            self.viewModel.updateIsBought(for: item)
+                        }
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -176,5 +187,5 @@ extension ShoppingListView {
 // MARK: - Preview
 
 #Preview {
-    ShoppingListView()
+    ShoppingListView(repo: MockShoppingListRepository())
 }

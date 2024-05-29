@@ -11,13 +11,24 @@ struct AddItemView: View {
     
     // MARK: Properties
     
+    private var repo: any DataRepository
+    
     @Environment(\.modelContext) private var modelContext
+    @ObservedObject var viewModel: AddItemViewModel
     @Binding var isPresented: Bool
     @State private var name: String = ""
     @State private var itemDescription: String = ""
     @State private var quantity: Int = 0
     @State private var showAlert = false
     @State private var alertMessage = ""
+    
+    // MARK: Initializer
+    
+    init(repo: any DataRepository, isPresented: Binding<Bool>) {
+        self.repo = repo
+        self._isPresented = isPresented
+        self.viewModel = AddItemViewModel(repo: repo)
+    }
     
     // MARK: Body
     
@@ -85,12 +96,12 @@ extension AddItemView {
     
     private func addItem() {
         let newItem = Item(name: name, itemDescription: itemDescription, quantity: quantity)
-        ShoppingListRepository.shared.add(newItem)
+        self.viewModel.addItem(newItem)
     }
 }
 
 // MARK: - Preview
 
 #Preview {
-    AddItemView(isPresented: Binding.constant(true))
+    AddItemView(repo: MockShoppingListRepository(), isPresented: Binding.constant(true))
 }

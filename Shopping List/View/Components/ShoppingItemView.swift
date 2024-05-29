@@ -12,6 +12,7 @@ struct ShoppingItemView: View {
     // MARK: Properties
     
     var item: Item
+    var toggleIsBought: () -> Void
     
     // MARK: Body
 
@@ -42,10 +43,7 @@ extension ShoppingItemView {
     
     private var IsBoughtCheckBox: some View {
         Button(action: {
-            withAnimation {
-                let newItem = Item(id: item.id, name: item.name, itemDescription: item.itemDescription, quantity: item.quantity, isBought: !item.isBought)
-                ShoppingListRepository.shared.update(newItem)
-            }
+            self.toggleIsBought()
         }) {
             Image(systemName: item.isBought ? "checkmark.square.fill" : "square")
                 .resizable()
@@ -60,5 +58,5 @@ extension ShoppingItemView {
 // MARK: - Preview
 
 #Preview {
-    ShoppingItemView(item: Item(name: "", itemDescription: "", quantity: 0))
+    ShoppingItemView(item: Item(name: "", itemDescription: "", quantity: 0), toggleIsBought: {})
 }

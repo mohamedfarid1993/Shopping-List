@@ -11,7 +11,10 @@ struct EditItemView: View {
     
     // MARK: Properties
     
+    private var repo: any DataRepository
+    
     @Environment(\.presentationMode) private var presentationMode
+    @ObservedObject var viewModel: EditItemViewModel
     @State private var name: String
     @State private var itemDescription: String
     @State private var quantity: Int
@@ -20,11 +23,13 @@ struct EditItemView: View {
     
     // MARK: Initializers
     
-    init(item: Item) {
+    init(repo: any DataRepository, item: Item) {
         self.item = item
+        self.repo = repo
         _name = State(initialValue: item.name)
         _itemDescription = State(initialValue: item.itemDescription)
         _quantity = State(initialValue: item.quantity)
+        self.viewModel = EditItemViewModel(repo: repo)
     }
     
     // MARK: Body
@@ -56,7 +61,7 @@ extension EditItemView {
     
     private func updateItem() {
         let newItem = Item(id: item.id, name: name, itemDescription: itemDescription, quantity: quantity, isBought: item.isBought)
-        ShoppingListRepository.shared.update(newItem)
+        self.viewModel.update(newItem)
         presentationMode.wrappedValue.dismiss()
     }
 }
@@ -64,5 +69,5 @@ extension EditItemView {
 // MARK: - Preview
 
 #Preview {
-    EditItemView(item: Item(name: "", itemDescription: "", quantity: 0))
+    EditItemView(repo: MockShoppingListRepository(), item: Item(name: "", itemDescription: "", quantity: 0))
 }

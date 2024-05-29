@@ -11,10 +11,7 @@ import Combine
 class ShoppingListRepository: ObservableObject {
     
     // MARK: Properties
-    
-    typealias T = Item
-    
-    public static var shared = ShoppingListRepository()
+        
     private let container: NSPersistentContainer
     private var context: NSManagedObjectContext {
         return container.viewContext
@@ -22,7 +19,7 @@ class ShoppingListRepository: ObservableObject {
     
     // MARK: Initializers
     
-    private init() {
+    init() {
         container = NSPersistentContainer(name: "ShoppingList")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error {
@@ -32,11 +29,11 @@ class ShoppingListRepository: ObservableObject {
     }
 }
 
-// MARK: - Data Repository
+// MARK: - Data Repository Methods
 
 extension ShoppingListRepository: DataRepository {
     
-    func getAll() -> AnyPublisher<[T], Error> {
+    func getAll() -> AnyPublisher<[Item], Error> {
         Future<[Item], Error> { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
             do {
@@ -49,7 +46,7 @@ extension ShoppingListRepository: DataRepository {
         }.eraseToAnyPublisher()
     }
     
-    func get(withId id: UUID) -> AnyPublisher<T, Error> {
+    func get(withId id: UUID) -> AnyPublisher<Item, Error> {
         Future<Item, Error> { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
             do {

@@ -16,10 +16,12 @@ class ShoppingListViewModel: ObservableObject {
     @Published var isShowingError = false
     var errorMessage: String?
     private var cancellables: Set<AnyCancellable> = []
+    private var repo: any DataRepository
     
     // MARK: Initializers
     
-    init() {
+    init(repo: any DataRepository) {
+        self.repo = repo
         self.observeRepositoryUpdates()
         self.getAllItems()
     }
@@ -30,7 +32,7 @@ class ShoppingListViewModel: ObservableObject {
 extension ShoppingListViewModel {
     
     private func observeRepositoryUpdates() {
-        ShoppingListRepository.shared.objectWillChange
+        self.repo.objectWillChange
             .sink { [weak self] _ in
                 self?.getAllItems()
             }
@@ -38,7 +40,7 @@ extension ShoppingListViewModel {
     }
     
     func getAllItems() {
-        ShoppingListRepository.shared.getAll()
+        self.repo.getAll()
             .sink { [weak self] completion in
                 guard case let .failure(error) = completion else { return }
                 self?.errorMessage = error.localizedDescription
@@ -49,8 +51,23 @@ extension ShoppingListViewModel {
             .store(in: &self.cancellables)
     }
     
+    func updateIsBought(for item: Item) {
+        let newItem = Item(id: item.id,
+                           name: item.name,
+                           itemDescription: item.itemDescription,
+                           quantity: item.quantity,
+                           isBought: !item.isBought)
+        self.repo.update(newItem)
+            .sink { [weak self] completion in
+                guard case let .failure(error) = completion else { return }
+                self?.errorMessage = error.localizedDescription
+                self?.isShowingError = true
+            } receiveValue: { _ in }
+            .store(in: &self.cancellables)
+    }
+    
     func deleteItem(by index: IndexSet.Element) {
-        ShoppingListRepository.shared.delete(withId: items[index].id)
+        self.repo.delete(withId: items[index].id)
             .sink { [weak self] completion in
                 guard case let .failure(error) = completion else { return }
                 self?.errorMessage = error.localizedDescription

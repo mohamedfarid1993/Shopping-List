@@ -8,13 +8,11 @@
 import Foundation
 import Combine
 
-protocol DataRepository {
-    associatedtype T
-
-    func getAll() -> AnyPublisher<[T], Error>
-    func get(withId id: UUID) -> AnyPublisher<T, Error>
-    func add(_ item: T) -> AnyPublisher<Void, Error>
-    func update(_ item: T) -> AnyPublisher<Void, Error>
+protocol DataRepository: AnyObject, ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
+    func getAll() -> AnyPublisher<[Item], Error>
+    func get(withId id: UUID) -> AnyPublisher<Item, Error>
+    func add(_ item: Item) -> AnyPublisher<Void, Error>
+    func update(_ item: Item) -> AnyPublisher<Void, Error>
     func delete(withId id: UUID) -> AnyPublisher<Void, Error>
     func deleteAll() -> AnyPublisher<Void, Error>
 }
