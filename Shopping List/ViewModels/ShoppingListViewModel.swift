@@ -97,19 +97,19 @@ extension ShoppingListViewModel {
     
     func filter(by isBought: Bool) {
         self.isBought = isBought
-        self.handleFetchedData(items)
+        self.handleFetchedData(self.items)
     }
     
     func sort(by order: SortOrder) {
         self.sortOrder = order
-        self.handleFetchedData(items)
+        self.handleFetchedData(self.items)
     }
     
     func search() {
-        self.handleFetchedData(items)
+        self.handleFetchedData(self.items)
     }
     
-    private func handleFetchedData(_ items: [Item]) {
+    func handleFetchedData(_ items: [Item]) {
         let filteredItems = items.filter({ $0.isBought == self.isBought })
         let sortedItems: [Item]
         switch sortOrder {

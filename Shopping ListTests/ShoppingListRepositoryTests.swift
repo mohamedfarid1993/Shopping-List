@@ -30,7 +30,7 @@ final class ShoppingListRepositoryTests: XCTestCase {
     }
 }
 
-// MARK: - Tessting Cases
+// MARK: - Test Cases
 
 extension ShoppingListRepositoryTests {
     
