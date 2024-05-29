@@ -19,8 +19,13 @@ class ShoppingListRepository: ObservableObject {
     
     // MARK: Initializers
     
-    init() {
+    init(isTesting: Bool = false) {
         container = NSPersistentContainer(name: "ShoppingList")
+        if isTesting { // To save in memory during testing to always start fresh and not affect app data
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+        }
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error {
                 fatalError("Unresolved error \(error)")

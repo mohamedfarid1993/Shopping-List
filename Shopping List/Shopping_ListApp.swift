@@ -12,13 +12,13 @@ import SwiftData
 struct Shopping_ListApp: App {
     
     var dataReposirtory: any DataRepository {
+        var isTesting = false
         #if DEBUG
         if CommandLine.arguments.contains("enable-testing") {
-            return MockShoppingListRepository()
-        } else {
-            return ShoppingListRepository()
+            isTesting = true
         }
         #endif
+        return ShoppingListRepository(isTesting: isTesting)
     }
     
     // MARK: Body
