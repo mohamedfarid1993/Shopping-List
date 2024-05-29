@@ -27,15 +27,15 @@ struct AddItemView: View {
                 Section(header: Text("Item Details").font(.subheadline)) {
                     TextField("Name", text: $name)
                         .frame(height: 40)
-                        .accessibility(identifier: "NameTextField")
+                        .accessibility(identifier: AccessibilityIdentifiers.addItemNameTextField)
                     TextField("Description", text: $itemDescription)
                         .frame(height: 40)
-                        .accessibility(identifier: "DescriptionTextField")
+                        .accessibility(identifier: AccessibilityIdentifiers.addItemDescriptionTextField)
                     Stepper(value: $quantity, in: 0...100) {
                         Text("Quantity: \(quantity)")
                     }
                     .frame(height: 40)
-                    .accessibility(identifier: "QuantityStepper")
+                    .accessibility(identifier: AccessibilityIdentifiers.addItemQuantityStepper)
 
                 }
             }
@@ -44,7 +44,7 @@ struct AddItemView: View {
                 isPresented = false
             }, trailing: Button("Save") {
                 validateAndSaveItem()
-            }.accessibility(identifier: "SaveButton"))
+            }.accessibility(identifier: AccessibilityIdentifiers.addItemSaveButton))
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
