@@ -17,13 +17,13 @@ class ShoppingListViewModel: ObservableObject {
     var errorMessage: String?
     private var cancellables: Set<AnyCancellable> = []
     private var repo: any DataRepository
+    private var isBought = false
     
     // MARK: Initializers
     
     init(repo: any DataRepository) {
         self.repo = repo
         self.observeRepositoryUpdates()
-        self.getAllItems()
     }
 }
 
@@ -34,7 +34,8 @@ extension ShoppingListViewModel {
     private func observeRepositoryUpdates() {
         self.repo.objectWillChange
             .sink { [weak self] _ in
-                self?.getAllItems()
+                guard let self = self else { return }
+                self.getAllItems()
             }
             .store(in: &self.cancellables)
     }
@@ -46,7 +47,9 @@ extension ShoppingListViewModel {
                 self?.errorMessage = error.localizedDescription
                 self?.isShowingError = true
             } receiveValue: { [weak self] data in
-                self?.items = data
+                guard let self = self else { return }
+                self.items = data
+                self.items = items.filter({ $0.isBought == self.isBought })
             }
             .store(in: &self.cancellables)
     }
@@ -74,5 +77,15 @@ extension ShoppingListViewModel {
                 self?.isShowingError = true
             } receiveValue: { _ in }
             .store(in: &self.cancellables)
+    }
+}
+
+// MARK: - Data Arrangment Methods
+
+extension ShoppingListViewModel {
+    
+    func filter(by isBought: Bool) {
+        self.isBought = isBought
+        self.getAllItems()
     }
 }

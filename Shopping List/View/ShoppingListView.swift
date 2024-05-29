@@ -21,23 +21,6 @@ struct ShoppingListView: View {
     @State private var searchText = ""
     @State private var showOnlyBoughtItems = false
     
-    var filteredItems: [Item] {
-        viewModel.items
-//        let itemsToSort = showOnlyBoughtItems ? boughtItems : items
-//        let filteredItems = itemsToSort.filter { item in
-//            searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText) || item.itemDescription.localizedCaseInsensitiveContains(searchText)
-//        }
-//        
-//        switch sortOrder {
-//        case .ascending:
-//            return filteredItems.sorted(by: { $0.quantity < $1.quantity })
-//        case .descending:
-//            return filteredItems.sorted(by: { $0.quantity > $1.quantity })
-//        case .none:
-//            return filteredItems
-//        }
-    }
-    
     var emptyStateMessage: String {
         if searchText.isEmpty {
             return showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😄" : "Your shopping list is empty. Start adding items by tapping the '+' button."
@@ -126,10 +109,10 @@ extension ShoppingListView {
     
     private var ListWithToolbar: some View {
         List {
-            if filteredItems.isEmpty {
+            if viewModel.items.isEmpty {
                 EmptyStateView
             } else {
-                ForEach(filteredItems) { item in
+                ForEach(viewModel.items) { item in
                     NavigationLink {
                         EditItemView(repo: self.repo, item: item)
                             .navigationBarTitle("Edit Item", displayMode: .automatic)
@@ -145,7 +128,7 @@ extension ShoppingListView {
         .searchable(text: $searchText)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !filteredItems.isEmpty {
+                if !viewModel.items.isEmpty {
                     EditButton()
                 }
             }
@@ -155,6 +138,9 @@ extension ShoppingListView {
                         .accessibility(identifier: AccessibilityIdentifiers.addItemButton)
                 }
             }
+        }
+        .onChange(of: self.showOnlyBoughtItems) { oldValue, newValue in
+            self.viewModel.filter(by: newValue)
         }
     }
     
