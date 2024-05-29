@@ -13,27 +13,27 @@ struct ShoppingListView: View {
     // MARK: Properties
     
     @Environment(\.modelContext) private var modelContext
-    @Query(filter: #Predicate<Item> { !$0.isBought }) private var items: [Item]
-    @Query(filter: #Predicate<Item> { $0.isBought }) private var boughtItems: [Item]
+    @StateObject var viewModel = ShoppingListViewModel()
     @State private var isPresentingAddItemView = false
     @State private var sortOrder: SortOrder = .none
     @State private var searchText = ""
     @State private var showOnlyBoughtItems = false
     
     var filteredItems: [Item] {
-        let itemsToSort = showOnlyBoughtItems ? boughtItems : items
-        let filteredItems = itemsToSort.filter { item in
-            searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText) || item.itemDescription.localizedCaseInsensitiveContains(searchText)
-        }
-        
-        switch sortOrder {
-        case .ascending:
-            return filteredItems.sorted(by: { $0.quantity < $1.quantity })
-        case .descending:
-            return filteredItems.sorted(by: { $0.quantity > $1.quantity })
-        case .none:
-            return filteredItems
-        }
+        viewModel.items
+//        let itemsToSort = showOnlyBoughtItems ? boughtItems : items
+//        let filteredItems = itemsToSort.filter { item in
+//            searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText) || item.itemDescription.localizedCaseInsensitiveContains(searchText)
+//        }
+//        
+//        switch sortOrder {
+//        case .ascending:
+//            return filteredItems.sorted(by: { $0.quantity < $1.quantity })
+//        case .descending:
+//            return filteredItems.sorted(by: { $0.quantity > $1.quantity })
+//        case .none:
+//            return filteredItems
+//        }
     }
     
     var emptyStateMessage: String {
@@ -66,6 +66,9 @@ struct ShoppingListView: View {
         .sheet(isPresented: $isPresentingAddItemView) {
             AddItemView(isPresented: $isPresentingAddItemView)
                 .accessibility(identifier: AccessibilityIdentifiers.addItemView)
+        }
+        .onAppear {
+            viewModel.getAllItems()
         }
     }
 }
@@ -159,7 +162,7 @@ extension ShoppingListView {
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(filteredItems[index])
+                viewModel.deleteItem(by: index)
             }
         }
     }

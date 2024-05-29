@@ -5,15 +5,14 @@
 //  Created by Mohamed Farid on 27/05/2024.
 //
 
-import Foundation
-import SwiftData
+import UIKit
+import CoreData
 
-@Model
-final class Item {
+struct Item: Identifiable {
     
     // MARK: Properties
     
-    @Attribute(.unique) var id: UUID
+    var id: UUID
     var name: String
     var itemDescription: String
     var quantity: Int
@@ -21,11 +20,26 @@ final class Item {
     
     // MARK: Initializers
     
-    init(name: String, itemDescription: String, quantity: Int, isBought: Bool = false) {
-        self.id = UUID()
+    init(id: UUID? = nil, name: String, itemDescription: String, quantity: Int, isBought: Bool = false) {
+        self.id = id ?? UUID()
         self.name = name
         self.itemDescription = itemDescription
         self.quantity = quantity
         self.isBought = isBought
+    }
+}
+
+// MARK: - NSManagedObject
+
+extension NSManagedObject {
+    
+    // MARK: To Item Method
+    
+    func toItem() -> Item {
+        return Item(id: self.value(forKey: "id") as? UUID,
+                    name: self.value(forKey: "name") as! String,
+                    itemDescription: self.value(forKey: "item_description") as! String,
+                    quantity: self.value(forKey: "quantity") as! Int,
+                    isBought: self.value(forKey: "is_bought") as!  Bool)
     }
 }

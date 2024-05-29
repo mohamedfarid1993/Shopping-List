@@ -16,7 +16,7 @@ struct EditItemView: View {
     @State private var itemDescription: String
     @State private var quantity: Int
     
-    @Bindable var item: Item
+    var item: Item
     
     // MARK: Initializers
     
@@ -55,9 +55,8 @@ extension EditItemView {
     // MARK: Update Item
     
     private func updateItem() {
-        item.name = name
-        item.itemDescription = itemDescription
-        item.quantity = quantity
+        let newItem = Item(id: item.id, name: name, itemDescription: itemDescription, quantity: quantity, isBought: item.isBought)
+        ShoppingListRepository.shared.update(newItem)
         presentationMode.wrappedValue.dismiss()
     }
 }

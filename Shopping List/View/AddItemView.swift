@@ -85,7 +85,7 @@ extension AddItemView {
     
     private func addItem() {
         let newItem = Item(name: name, itemDescription: itemDescription, quantity: quantity)
-        modelContext.insert(newItem)
+        ShoppingListRepository.shared.add(newItem)
     }
 }
 
