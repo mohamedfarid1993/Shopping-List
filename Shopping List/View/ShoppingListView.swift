@@ -38,7 +38,7 @@ struct ShoppingListView: View {
     
     var emptyStateMessage: String {
         if searchText.isEmpty {
-            return showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😉" : "Your shopping list is empty. Start adding items by tapping the '+' button."
+            return showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😄" : "Your shopping list is empty. Start adding items by tapping the '+' button."
         } else {
             return "We couldn't find any matches for your search."
         }
