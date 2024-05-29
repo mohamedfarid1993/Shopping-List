@@ -57,13 +57,13 @@ extension ShoppingListViewUITests {
         let addItemView = app.otherElements["AddItemView"]
         XCTAssertFalse(addItemView.exists, "The add item view should be dismissed after saving the new item")
         
-        // Search for the newly added item
+        // Search for an item
         let searchField = app.searchFields.firstMatch
         XCTAssertTrue(searchField.exists, "The search field should exist")
         searchField.tap()
         searchField.typeText("Test Item")
         
-        // Verify that the new item appears in the list
+        // Verify that an item does appear in the list
         let newItem = app.staticTexts["Test Item"]
         XCTAssertTrue(newItem.exists, "The new item should appear in the list after being added")
     }

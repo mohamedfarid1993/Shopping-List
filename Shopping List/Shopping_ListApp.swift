@@ -12,7 +12,13 @@ import SwiftData
 struct Shopping_ListApp: App {
     
     var dataReposirtory: any DataRepository {
-        ShoppingListRepository() // Then enables us to pass a mock repo for previews & testing
+        #if DEBUG
+        if CommandLine.arguments.contains("enable-testing") {
+            return MockShoppingListRepository()
+        } else {
+            return ShoppingListRepository()
+        }
+        #endif
     }
     
     // MARK: Body
