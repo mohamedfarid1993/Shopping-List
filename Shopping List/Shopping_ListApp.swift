@@ -10,23 +10,22 @@ import SwiftData
 
 @main
 struct Shopping_ListApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+    
+    var dataReposirtory: any DataRepository {
+        var isTesting = false
+        #if DEBUG
+        if CommandLine.arguments.contains("enable-testing") {
+            isTesting = true
         }
-    }()
-
+        #endif
+        return ShoppingListRepository(isTesting: isTesting)
+    }
+    
+    // MARK: Body
+    
     var body: some Scene {
         WindowGroup {
-            ShoppingListView()
+            ShoppingListView(repo: dataReposirtory)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
