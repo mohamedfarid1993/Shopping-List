@@ -1,14 +1,13 @@
 //
-//  Shopping_ListTests.swift
+//  ShoppingListViewModelTests.swift
 //  Shopping ListTests
 //
-//  Created by Mohamed Farid on 27/05/2024.
+//  Created by Mohamed Farid on 29/05/2024.
 //
 
 import XCTest
-@testable import Shopping_List
 
-final class Shopping_ListTests: XCTestCase {
+final class ShoppingListViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

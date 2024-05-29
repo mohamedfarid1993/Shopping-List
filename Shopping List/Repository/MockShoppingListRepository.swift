@@ -20,13 +20,6 @@ class MockShoppingListRepository: DataRepository {
             .eraseToAnyPublisher()
     }
     
-    func get(withId id: UUID) -> AnyPublisher<Item, Error> {
-        let item = Item(id: id, name: "Apples", itemDescription: "Red Apples", quantity: 5, isBought: false)
-        return Just(item)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-    
     func add(_ item: Item) -> AnyPublisher<Void, Error> {
         return Just(())
             .setFailureType(to: Error.self)
@@ -40,12 +33,6 @@ class MockShoppingListRepository: DataRepository {
     }
     
     func delete(withId id: UUID) -> AnyPublisher<Void, Error> {
-        return Just(())
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-    
-    func deleteAll() -> AnyPublisher<Void, Error> {
         return Just(())
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()

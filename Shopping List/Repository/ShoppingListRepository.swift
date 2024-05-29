@@ -51,22 +51,6 @@ extension ShoppingListRepository: DataRepository {
         }.eraseToAnyPublisher()
     }
     
-    func get(withId id: UUID) -> AnyPublisher<Item, Error> {
-        Future<Item, Error> { [weak self] promise in
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
-            do {
-                fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
-                guard 
-                    let itemEntities = try self?.context.fetch(fetchRequest) as? [NSManagedObject],
-                    let itemEntity = itemEntities.first
-                else { promise(.failure(RepositoryError.fetchRequestError(description: nil))); return }
-                promise(.success(itemEntity.toItem()))
-            } catch {
-                promise(.failure(RepositoryError.getItemWithIdFailed(description: error.localizedDescription)))
-            }
-        }.eraseToAnyPublisher()
-    }
-    
     func add(_ item: Item) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { [weak self] promise in
             guard
@@ -92,7 +76,7 @@ extension ShoppingListRepository: DataRepository {
     func update(_ item: Item) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
-            fetchRequest.predicate = NSPredicate(format: "id = %@", item.id.uuidString)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", item.id as CVarArg)
             do {
                 let itemEntities = try self?.context.fetch(fetchRequest)
                 if let itemEntity = itemEntities?.first as? NSManagedObject {
@@ -115,8 +99,7 @@ extension ShoppingListRepository: DataRepository {
     func delete(withId id: UUID) -> AnyPublisher<Void, Error> {
         Future<Void, Error> { [weak self] promise in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
-            fetchRequest.predicate = NSPredicate(format: "id = %@", id.uuidString)
-            
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
             do {
                 let itemEntities = try self?.context.fetch(fetchRequest)
                 if let itemEntity = itemEntities?.first as? NSManagedObject {
@@ -127,20 +110,6 @@ extension ShoppingListRepository: DataRepository {
                 }
             } catch {
                 promise(.failure(RepositoryError.deleteItemFailed(description: error.localizedDescription)))
-            }
-        }.eraseToAnyPublisher()
-    }
-    
-    func deleteAll() -> AnyPublisher<Void, Error> {
-        Future<Void, Error> { [weak self] promise in
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ItemEntity")
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            do {
-                try self?.context.execute(deleteRequest)
-                try self?.context.save()
-                self?.objectWillChange.send()
-            } catch {
-                promise(.failure(RepositoryError.deleteAllItemsFailed(description: error.localizedDescription)))
             }
         }.eraseToAnyPublisher()
     }

@@ -10,9 +10,7 @@ import Combine
 
 protocol DataRepository: AnyObject, ObservableObject where Self.ObjectWillChangePublisher == ObservableObjectPublisher {
     func getAll() -> AnyPublisher<[Item], Error>
-    func get(withId id: UUID) -> AnyPublisher<Item, Error>
     func add(_ item: Item) -> AnyPublisher<Void, Error>
     func update(_ item: Item) -> AnyPublisher<Void, Error>
     func delete(withId id: UUID) -> AnyPublisher<Void, Error>
-    func deleteAll() -> AnyPublisher<Void, Error>
 }
