@@ -65,7 +65,6 @@ struct ShoppingListView: View {
         }
         .sheet(isPresented: $isPresentingAddItemView) {
             AddItemView(isPresented: $isPresentingAddItemView)
-                .environment(\.modelContext, modelContext)
                 .accessibility(identifier: AccessibilityIdentifiers.addItemView)
         }
     }
