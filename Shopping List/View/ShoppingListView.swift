@@ -67,6 +67,11 @@ struct ShoppingListView: View {
             AddItemView(isPresented: $isPresentingAddItemView)
                 .accessibility(identifier: AccessibilityIdentifiers.addItemView)
         }
+        .alert(isPresented: $viewModel.isShowingError) {
+            Alert(title: Text("Error"), message: Text(viewModel.errorMessage ?? ""), dismissButton: .default(Text("OK")) {
+                viewModel.isShowingError = false
+            })
+        }
         .onAppear {
             viewModel.getAllItems()
         }

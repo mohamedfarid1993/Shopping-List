@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import Combine
 
 protocol DataRepository {
     associatedtype T
 
-    func getAll() -> [T]
-    func get(withId id: UUID) -> T?
-    func add(_ item: T)
-    func update(_ item: T)
-    func delete(withId id: UUID)
-    func deleteAll()
+    func getAll() -> AnyPublisher<[T], Error>
+    func get(withId id: UUID) -> AnyPublisher<T, Error>
+    func add(_ item: T) -> AnyPublisher<Void, Error>
+    func update(_ item: T) -> AnyPublisher<Void, Error>
+    func delete(withId id: UUID) -> AnyPublisher<Void, Error>
+    func deleteAll() -> AnyPublisher<Void, Error>
 }

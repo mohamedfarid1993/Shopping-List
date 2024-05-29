@@ -11,6 +11,7 @@
 		7230DD312C0740CA00529868 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230DD302C0740CA00529868 /* DataRepository.swift */; };
 		7230DD362C0747CC00529868 /* ShoppingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230DD352C0747CC00529868 /* ShoppingListViewModel.swift */; };
 		7230DD392C074AA900529868 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7230DD372C074AA900529868 /* ShoppingList.xcdatamodeld */; };
+		7230DD3B2C0759FE00529868 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230DD3A2C0759FE00529868 /* RepositoryError.swift */; };
 		72EBCF1B2C05056F009D21E7 /* Shopping_ListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF1A2C05056F009D21E7 /* Shopping_ListApp.swift */; };
 		72EBCF1F2C05056F009D21E7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EBCF1E2C05056F009D21E7 /* Item.swift */; };
 		72EBCF212C050571009D21E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72EBCF202C050571009D21E7 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		7230DD302C0740CA00529868 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 		7230DD352C0747CC00529868 /* ShoppingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewModel.swift; sourceTree = "<group>"; };
 		7230DD382C074AA900529868 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
+		7230DD3A2C0759FE00529868 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		72EBCF172C05056F009D21E7 /* Shopping List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shopping List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72EBCF1A2C05056F009D21E7 /* Shopping_ListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping_ListApp.swift; sourceTree = "<group>"; };
 		72EBCF1C2C05056F009D21E7 /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				7230DD302C0740CA00529868 /* DataRepository.swift */,
 				7230DD2E2C07377E00529868 /* ShoppingListRepository.swift */,
+				7230DD3A2C0759FE00529868 /* RepositoryError.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			files = (
 				72EBCF492C050B03009D21E7 /* ShoppingListView.swift in Sources */,
 				72EBCF1F2C05056F009D21E7 /* Item.swift in Sources */,
+				7230DD3B2C0759FE00529868 /* RepositoryError.swift in Sources */,
 				72EBCF4E2C05129C009D21E7 /* EditItemView.swift in Sources */,
 				7230DD2F2C07377E00529868 /* ShoppingListRepository.swift in Sources */,
 				72EBCF502C0525A3009D21E7 /* ShoppingItemView.swift in Sources */,
