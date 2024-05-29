@@ -17,6 +17,11 @@ For data persistence, the app uses Swift Data framework. However, to comply with
 - **Search**: Users can search for items in the shopping list based on their names/descriptions.
 - **Sort Ascedingly/Desendingly**: Users can sort items ascendingly/descendingly based on the items quantites.
 
+## Tests
+- **UI Tests**: Adding an item and searching for it simple test is adding for both CoreData(main branch) and SwiftUI(swift-data branch) 
+- **Unit Tests**: Added tests for DataRepository & the app view models testable logic for only CoreData(mainBranch)
+
+
 ## Enhancements
 
 - **User Experience**
