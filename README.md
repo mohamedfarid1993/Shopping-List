@@ -21,7 +21,8 @@ This is a simple iOS application for managing your shopping list. Users can add,
 ## Tests
 - **UI Tests**: Adding an item and searching for it simple test is adding for both CoreData(main branch) and SwiftUI(swift-data branch) 
 - **Unit Tests**: Added tests for DataRepository & the app view models testable logic for only CoreData(main Branch)
-
+- **Maunal Tests**: Manual Testing is conducted to make sure all requirements are met
+- **Memory Leaks Tests**: Memory leaks checks using Instruments(main branch) with zero memory leaks
 
 ## Enhancements To Be Added
 
