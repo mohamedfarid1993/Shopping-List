@@ -10,10 +10,21 @@ import Combine
 
 class ShoppingListViewModel: ObservableObject {
     
+    enum SortOrder {
+        case none, ascending, descending
+    }
+    
     // MARK: Properties
     
-    @Published var items: [Item] = []
+    private var items: [Item] = []
+    @Published var filteredItems: [Item] = []
     @Published var isShowingError = false
+    @Published var sortOrder: SortOrder = .none
+    @Published var searchText = "" {
+        didSet {
+            self.search()
+        }
+    }
     var errorMessage: String?
     private var cancellables: Set<AnyCancellable> = []
     private var repo: any DataRepository
@@ -47,9 +58,9 @@ extension ShoppingListViewModel {
                 self?.errorMessage = error.localizedDescription
                 self?.isShowingError = true
             } receiveValue: { [weak self] data in
-                guard let self = self else { return }
-                self.items = data
-                self.items = items.filter({ $0.isBought == self.isBought })
+                self?.items = data
+                self?.filteredItems = data
+                self?.handleFetchedData(data)
             }
             .store(in: &self.cancellables)
     }
@@ -86,6 +97,31 @@ extension ShoppingListViewModel {
     
     func filter(by isBought: Bool) {
         self.isBought = isBought
-        self.getAllItems()
+        self.handleFetchedData(items)
+    }
+    
+    func sort(by order: SortOrder) {
+        self.sortOrder = order
+        self.handleFetchedData(items)
+    }
+    
+    func search() {
+        self.handleFetchedData(items)
+    }
+    
+    private func handleFetchedData(_ items: [Item]) {
+        let filteredItems = items.filter({ $0.isBought == self.isBought })
+        let sortedItems: [Item]
+        switch sortOrder {
+        case .ascending:
+            sortedItems = filteredItems.sorted(by: { $0.quantity < $1.quantity })
+        case .descending:
+            sortedItems = filteredItems.sorted(by: { $0.quantity > $1.quantity })
+        case .none:
+            sortedItems = filteredItems
+        }
+        self.filteredItems = sortedItems.filter { item in
+            searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText) || item.itemDescription.localizedCaseInsensitiveContains(searchText)
+        }
     }
 }

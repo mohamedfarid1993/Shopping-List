@@ -17,20 +17,14 @@ struct ShoppingListView: View {
     @Environment(\.modelContext) private var modelContext
     @ObservedObject var viewModel: ShoppingListViewModel
     @State private var isPresentingAddItemView = false
-    @State private var sortOrder: SortOrder = .none
-    @State private var searchText = ""
     @State private var showOnlyBoughtItems = false
     
     var emptyStateMessage: String {
-        if searchText.isEmpty {
+        if self.viewModel.searchText.isEmpty {
             return showOnlyBoughtItems ? "Your bought items list is as empty as my fridge just water bottles 😄" : "Your shopping list is empty. Start adding items by tapping the '+' button."
         } else {
             return "We couldn't find any matches for your search."
         }
-    }
-    
-    enum SortOrder {
-        case none, ascending, descending
     }
     
     // MARK: Initializer
@@ -79,14 +73,14 @@ extension ShoppingListView {
     private var SortingMenu: some View {
         Menu {
             Button(action: {
-                sortOrder = .ascending
+                self.viewModel.sort(by: .ascending)
             }) {
-                Label("Sort Ascending", systemImage: sortOrder == .ascending ? "checkmark" : "")
+                Label("Sort Ascending", systemImage: self.viewModel.sortOrder == .ascending ? "checkmark" : "")
             }
             Button(action: {
-                sortOrder = .descending
+                self.viewModel.sort(by: .descending)
             }) {
-                Label("Sort Descending", systemImage: sortOrder == .descending ? "checkmark" : "")
+                Label("Sort Descending", systemImage: self.viewModel.sortOrder == .descending ? "checkmark" : "")
             }
         } label: {
             Label("Sort", systemImage: "arrow.up.arrow.down")
@@ -109,10 +103,10 @@ extension ShoppingListView {
     
     private var ListWithToolbar: some View {
         List {
-            if viewModel.items.isEmpty {
+            if viewModel.filteredItems.isEmpty {
                 EmptyStateView
             } else {
-                ForEach(viewModel.items) { item in
+                ForEach(viewModel.filteredItems) { item in
                     NavigationLink {
                         EditItemView(repo: self.repo, item: item)
                             .navigationBarTitle("Edit Item", displayMode: .automatic)
@@ -125,10 +119,10 @@ extension ShoppingListView {
                 .onDelete(perform: deleteItems)
             }
         }
-        .searchable(text: $searchText)
+        .searchable(text: $viewModel.searchText)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if !viewModel.items.isEmpty {
+                if !viewModel.filteredItems.isEmpty {
                     EditButton()
                 }
             }
