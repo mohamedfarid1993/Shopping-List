@@ -27,12 +27,16 @@ struct AddItemView: View {
                 Section(header: Text("Item Details").font(.subheadline)) {
                     TextField("Name", text: $name)
                         .frame(height: 40)
+                        .accessibility(identifier: "NameTextField")
                     TextField("Description", text: $itemDescription)
                         .frame(height: 40)
+                        .accessibility(identifier: "DescriptionTextField")
                     Stepper(value: $quantity, in: 0...100) {
                         Text("Quantity: \(quantity)")
                     }
                     .frame(height: 40)
+                    .accessibility(identifier: "QuantityStepper")
+
                 }
             }
             .navigationBarTitle("Add New Item", displayMode: .inline)
@@ -40,7 +44,7 @@ struct AddItemView: View {
                 isPresented = false
             }, trailing: Button("Save") {
                 validateAndSaveItem()
-            })
+            }.accessibility(identifier: "SaveButton"))
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("Invalid Input"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }

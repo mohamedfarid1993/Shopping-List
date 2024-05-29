@@ -66,6 +66,7 @@ struct ShoppingListView: View {
         .sheet(isPresented: $isPresentingAddItemView) {
             AddItemView(isPresented: $isPresentingAddItemView)
                 .environment(\.modelContext, modelContext)
+                .accessibility(identifier: "AddItemView")
         }
     }
 }
@@ -133,6 +134,7 @@ extension ShoppingListView {
             ToolbarItem {
                 Button(action: { isPresentingAddItemView.toggle() }) {
                     Label("Add Item", systemImage: "plus")
+                        .accessibility(identifier: "AddItemButton")
                 }
             }
         }
