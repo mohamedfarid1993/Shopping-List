@@ -56,4 +56,4 @@ To get started with the project, follow these steps:
 1. Clone the repository to your local machine:
 
 ```bash
-git clone [https://github.com/mohamedfarid1993/shopping-list.git](https://github.com/mohamedfarid1993/Shopping-List)
+git clone https://github.com/mohamedfarid1993/Shopping-List
